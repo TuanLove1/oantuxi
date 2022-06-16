@@ -1,47 +1,34 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux/es/exports'
 class Computer extends Component {
-  render() {
-    let keyframe = `@keyframes randomComputer${Date.now()} {
-        0% {top:-100px}
-        25% {top:40px}
-        50% {top:-100px}
-        75% {top:40px}
-        100% {top:0px}
-    }`;
+    render() {
+        let keyfame = `@keyframes mymove${Date.now()} {
+                0%   {top: 0px;}
+                25%  {top: -50px;}
+                50%  {top: 50px;}
+                75%  {top: -50px;}
+                100% {top: 0px;}
+              }
+        `
+        const { computer } = this.props;
 
-    return (
-      <div className="player">
-        <style>{keyframe}</style>
-        <div className="box" style={{ position: "relative" }}>
-          <img
-            className="mt-4"
-            width={150}
-            height={150}
-            src={this.props.computer.hinhAnh}
-            alt={this.props.computer.hinhAnh}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 80,
-              animation: `randomComputer${Date.now()} .5s `,
-            }}
-          />
-        </div>
-        <div className="speech-bubble "></div>
-        <img
-          style={{ width: 200, height: 200 }}
-          src="./img/playerComputer.png"
-          alt="..."
-        />
-      </div>
-    );
-  }
+        return (
+            <div className='player'>
+                <style>
+                    {keyfame}
+                </style>
+                <div className='think' style={{position:'relative'}}>
+                    <img style={{width: 50, height: 50,animation:`mymove${Date.now()} 0.5s  `,position:'absolute',left:'33%' }} className='mt-3' src={computer.hinhAnh}></img>
+                </div>
+                <div className='speech-bubble'></div>
+                <img style={{ width: 120, height: 120 }} src='../img/playerComputer.png'></img>
+            </div>
+        )
+    }
 }
 const mapStateToProps = (state) => {
-  return {
-    computer: state.gameReducer.computer,
-  };
-};
+    return {
+        computer: state.OanTuXiReducer.computer,
+    }
+}
 export default connect(mapStateToProps, null)(Computer);

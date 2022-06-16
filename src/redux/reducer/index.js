@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
-import gameReducer from "./game/gameReducer";
-
+import OanTuXiReducer from "./oantuxi/OanTuXiReducer";
 const rootReducer = combineReducers({
-  gameReducer,
+  OanTuXiReducer,
 });
 export default rootReducer;

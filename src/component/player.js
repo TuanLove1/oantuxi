@@ -1,65 +1,49 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { actDatCuoc } from "../redux/action/game";
-
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 class Player extends Component {
-  renderItem = () => {
-    return this.props.arrDatCuoc.map((item, index) => {
-      let border = {};
-      if (item.datCuoc) {
-        border = {
-          border: "3px solid red",
-        };
-      }
-      return (
-        <div className="col-4" key={index}>
-          <button
-            style={border}
-            className="btnItem"
-            onClick={() => {
-              this.props.datCuoc(item.ma);
-            }}
-          >
-            <img width={35} height={35} src={item.hinhAnh} alt={item.hinhAnh} />
-          </button>
-        </div>
-      );
-    });
-  };
+    renderMangDC = () => {
+        const { mangDatCuoc, datCuoc } = this.props;
+        return mangDatCuoc.map((item, index) => {
+            return (
+                <div key={index} className='col-4'>
+                    <button onClick={() => {
+                        datCuoc(item.ma)
+                    }} style={item.datCuoc ? { border: '2px solid orange' } : { border: '' }} className='btnItem'>
+                        <img src={item.hinhAnh}></img>
+                    </button>
+                </div>
+            )
+        })
+    }
+    render() {
+        return (
+            <div className='player'>
+                <div className='think'>
+                    <img className='mt-3' style={{ width: 50, height: 50 }} src={this.props.mangDatCuoc.find((item) => item.datCuoc === true).hinhAnh}></img>
+                </div>
+                <div className='speech-bubble'></div>
+                <img style={{ width: 120, height: 120 }} src='../img/player.png'></img>
 
-  render() {
-    return (
-      <div className="player">
-        <div className="box">
-          <img
-            className="mt-4"
-            width={150}
-            height={150}
-            src={this.props.arrDatCuoc.find((item) => item.datCuoc).hinhAnh}
-            alt={this.props.arrDatCuoc.find((item) => item.datCuoc).hinhAnh}
-          />
-        </div>
-        <div className="speech-bubble "></div>
-        <img
-          style={{ width: 200, height: 200 }}
-          src="./img/player.png"
-          alt="..."
-        />
-        <div className="row">{this.renderItem()}</div>
-      </div>
-    );
-  }
+                <div className='row'>
+                    {this.renderMangDC()}
+                </div>
+            </div>
+        )
+    }
 }
 const mapStateToProps = (state) => {
-  return {
-    arrDatCuoc: state.gameReducer.arrDatCuoc,
-  };
-};
+    return {
+        mangDatCuoc: state.OanTuXiReducer.mangDatCuoc,
+    }
+}
 const mapDispatchToProps = (dispatch) => {
-  return {
-    datCuoc: (index) => {
-      dispatch(actDatCuoc(index));
-    },
-  };
-};
+    return {
+        datCuoc: (maCuoc) => {
+            dispatch({
+                type: 'CHON_BAO_BUA_KEO',
+                payload: maCuoc,
+            })
+        }
+    }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Player);
